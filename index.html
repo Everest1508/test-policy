@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Policy Acceptance | Aureole Pharma</title>
+    <style>
+        :root {
+            --primary: #0F85C5;
+            --primary-dark: #0C6BA8;
+            --primary-light: #E1F0F9;
+            --text: #2E3338;
+            --text-light: #6C7680;
+            --border: #D1D8DD;
+            --border-dark: #8D99A6;
+            --light-bg: #F5F7FA;
+            --white: #FFFFFF;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --rounded: 0.375rem;
+            --rounded-lg: 0.5rem;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--light-bg);
+            color: var(--text);
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+
+        /* Header - Frappe style */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            margin-bottom: 1.5rem;
+        }
+
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+        }
+
+        .brand-logo {
+            height: 2rem;
+        }
+
+        .brand-name {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-top: 0.25rem;
+        }
+
+        /* Main content area */
+        .page-container {
+            background-color: var(--white);
+            border-radius: var(--rounded-lg);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .page-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .page-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+        }
+
+        .page-description {
+            color: var(--text-light);
+            font-size: 0.875rem;
+        }
+
+        /* Policy content */
+        .policy-content {
+            padding: 1.5rem;
+        }
+
+        .policy-section {
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .section-content {
+            font-size: 0.875rem;
+            color: var(--text);
+        }
+
+        .section-content p {
+            margin-bottom: 1rem;
+        }
+
+        .section-content ul, 
+        .section-content ol {
+            margin-bottom: 1rem;
+            padding-left: 1.25rem;
+        }
+
+        .section-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Tables - Frappe style */
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1rem;
+            font-size: 0.875rem;
+        }
+
+        .table th {
+            background-color: var(--light-bg);
+            text-align: left;
+            padding: 0.75rem 1rem;
+            font-weight: 600;
+            border: 1px solid var(--border);
+        }
+
+        .table td {
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--border);
+        }
+
+        /* Acceptance checkbox */
+        .acceptance-box {
+            background-color: var(--light-bg);
+            padding: 1rem;
+            border-radius: var(--rounded);
+            margin-top: 1.5rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+        }
+
+        .checkbox {
+            margin-top: 0.125rem;
+        }
+
+        .acceptance-label {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        /* Navigation buttons */
+        .page-actions {
+            display: flex;
+            justify-content: space-between;
+            padding: 1.5rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border-radius: var(--rounded);
+            font-weight: 500;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .btn-default {
+            background-color: var(--white);
+            border-color: var(--border);
+            color: var(--text);
+        }
+
+        .btn-default:hover {
+            background-color: var(--light-bg);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .page-btn {
+            width: 2rem;
+            height: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: var(--rounded);
+            border: 1px solid var(--border);
+            background-color: var(--white);
+            color: var(--text);
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .page-btn.active {
+            background-color: var(--primary);
+            color: var(--white);
+            border-color: var(--primary);
+        }
+
+        .page-btn:hover:not(.active) {
+            background-color: var(--light-bg);
+        }
+
+        /* Completion page */
+        .completion-page {
+            text-align: center;
+            padding: 3rem 2rem;
+        }
+
+        .success-icon {
+            width: 4rem;
+            height: 4rem;
+            border-radius: 50%;
+            background-color: var(--primary-light);
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        .completion-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 1rem;
+        }
+
+        .completion-message {
+            color: var(--text-light);
+            margin-bottom: 1rem;
+            max-width: 36rem;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+            
+            .policy-content {
+                padding: 1rem;
+            }
+            
+            .page-actions {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header matching Frappe style -->
+        <nav class="navbar">
+            <a href="#" class="navbar-brand">
+                <svg class="brand-logo" width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M16 32C24.8366 32 32 24.8366 32 16C32 7.16344 24.8366 0 16 0C7.16344 0 0 7.16344 0 16C0 24.8366 7.16344 32 16 32Z" fill="#0F85C5"/>
+                    <path d="M11.6364 9.45459H20.3637V11.6364H11.6364V9.45459ZM8 16C8 12.3137 11.3137 9 15 9H17C20.6863 9 24 12.3137 24 16C24 19.6863 20.6863 23 17 23H15C11.3137 23 8 19.6863 8 16ZM15 11.6364C12.4477 11.6364 10.3636 13.7205 10.3636 16.2728C10.3636 18.825 12.4477 20.9091 15 20.9091H17C19.5523 20.9091 21.6364 18.825 21.6364 16.2728C21.6364 13.7205 19.5523 11.6364 17 11.6364H15Z" fill="white"/>
+                </svg>
+                <span class="brand-name">Aureole Pharma</span>
+            </a>
+        </nav>
+
+        <!-- Policy content container -->
+        <div class="page-container">
+            <!-- Page 1 - General Policies -->
+            <div class="policy-page" id="page1">
+                <div class="page-header">
+                    <h1 class="page-title">Employee Policy Acceptance</h1>
+                    <p class="page-description">Please review and acknowledge all company policies</p>
+                </div>
+                
+                <div class="policy-content">
+                    <div class="policy-section">
+                        <h2 class="section-title">1. General Policies</h2>
+                        <div class="section-content">
+                            <p>All employees are expected to adhere to the highest standards of professional conduct. This includes:</p>
+                            <ul>
+                                <li>Treating all colleagues, clients, and partners with respect and dignity</li>
+                                <li>Maintaining confidentiality of company information</li>
+                                <li>Avoiding conflicts of interest</li>
+                                <li>Complying with all applicable laws and regulations</li>
+                            </ul>
+                            <p>Violations of the code of conduct may result in disciplinary action, up to and including termination.</p>
+                        </div>
+                    </div>
+
+                    <div class="policy-section">
+                        <h2 class="section-title">2. Working Hours</h2>
+                        <div class="section-content">
+                            <p>Our standard work hours are 9:00 AM to 6:00 PM, Monday through Friday, with a one-hour lunch break.</p>
+                            <p>Employees are expected to:</p>
+                            <ul>
+                                <li>Arrive on time for all scheduled shifts</li>
+                                <li>Notify their manager as soon as possible if late or absent</li>
+                                <li>Record time accurately in the company timekeeping system</li>
+                                <li>Request time off at least two weeks in advance when possible</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="acceptance-box">
+                        <input type="checkbox" id="accept1" class="checkbox">
+                        <label for="accept1" class="acceptance-label">I acknowledge that I have read and understood the General Policies and Working Hours, and I agree to comply with these requirements.</label>
+                    </div>
+                </div>
+
+                <div class="page-actions">
+                    <button class="btn btn-default" disabled>Previous</button>
+                    <button class="btn btn-primary next-btn">Next</button>
+                </div>
+            </div>
+
+            <!-- Page 2 - Confidentiality -->
+            <div class="policy-page" id="page2" style="display: none;">
+                <div class="page-header">
+                    <h1 class="page-title">Confidentiality Policy</h1>
+                    <p class="page-description">Protecting company and customer information</p>
+                </div>
+                
+                <div class="policy-content">
+                    <div class="policy-section">
+                        <h2 class="section-title">1. Data Protection</h2>
+                        <div class="section-content">
+                            <p>As an employee, you may have access to sensitive company and customer data. You are required to:</p>
+                            <ul>
+                                <li>Protect all login credentials and not share them with others</li>
+                                <li>Only access data needed for your job responsibilities</li>
+                                <li>Follow all data retention and disposal policies</li>
+                                <li>Report any suspected data breaches immediately</li>
+                            </ul>
+                            <p>This policy complies with GDPR and other applicable data protection regulations.</p>
+                        </div>
+                    </div>
+
+                    <div class="policy-section">
+                        <h2 class="section-title">2. Non-Disclosure</h2>
+                        <div class="section-content">
+                            <p>Employees are obligated to maintain the confidentiality of:</p>
+                            <ul>
+                                <li>Trade secrets and proprietary information</li>
+                                <li>Customer and vendor data</li>
+                                <li>Software implementations and technical details</li>
+                                <li>Any other sensitive company information</li>
+                            </ul>
+                            <p>This obligation continues even after employment ends.</p>
+                        </div>
+                    </div>
+
+                    <div class="acceptance-box">
+                        <input type="checkbox" id="accept2" class="checkbox">
+                        <label for="accept2" class="acceptance-label">I acknowledge that I have read and understood the Confidentiality policies, and I agree to comply with these requirements.</label>
+                    </div>
+                </div>
+
+                <div class="page-actions">
+                    <button class="btn btn-default prev-btn">Previous</button>
+                    <button class="btn btn-primary next-btn">Next</button>
+                </div>
+            </div>
+
+            <!-- Page 3 - Assets -->
+            <div class="policy-page" id="page3" style="display: none;">
+                <div class="page-header">
+                    <h1 class="page-title">Asset Management Policy</h1>
+                    <p class="page-description">Proper use and care of company-provided equipment</p>
+                </div>
+                
+                <div class="policy-content">
+                    <div class="policy-section">
+                        <h2 class="section-title">1. Company Assets</h2>
+                        <div class="section-content">
+                            <p>The company may provide essential equipment including:</p>
+                            <ul>
+                                <li>Laptop and laptop bag</li>
+                                <li>Mobile device and SIM card</li>
+                                <li>ID cards and access badges</li>
+                                <li>Other necessary equipment</li>
+                            </ul>
+                            <p>Employees are responsible for the proper use and care of all assigned assets.</p>
+                        </div>
+                    </div>
+
+                    <div class="policy-section">
+                        <h2 class="section-title">2. Loss or Damage</h2>
+                        <div class="section-content">
+                            <p>In case of loss or damage to company assets:</p>
+                            <ul>
+                                <li><strong>Mobile Phones:</strong> Report immediately to HR. Employee responsible for ₹10,000 for lost device.</li>
+                                <li><strong>Laptops:</strong> Report to IT and HR. Employee responsible for ₹20,000 for lost device.</li>
+                                <li><strong>ID Cards:</strong> ₹300 replacement fee for lost cards.</li>
+                            </ul>
+                            <p>Costs will be deducted from salary or must be paid within 30 days.</p>
+                        </div>
+                    </div>
+
+                    <div class="acceptance-box">
+                        <input type="checkbox" id="accept3" class="checkbox">
+                        <label for="accept3" class="acceptance-label">I acknowledge that I have read and understood the Asset Management policies, and I agree to comply with these requirements.</label>
+                    </div>
+                </div>
+
+                <div class="page-actions">
+                    <button class="btn btn-default prev-btn">Previous</button>
+                    <button class="btn btn-primary next-btn">Next</button>
+                </div>
+            </div>
+
+            <!-- Page 4 - Compensation -->
+            <div class="policy-page" id="page4" style="display: none;">
+                <div class="page-header">
+                    <h1 class="page-title">Compensation Policy</h1>
+                    <p class="page-description">Salary, benefits, and reimbursement guidelines</p>
+                </div>
+                
+                <div class="policy-content">
+                    <div class="policy-section">
+                        <h2 class="section-title">1. Salary and Benefits</h2>
+                        <div class="section-content">
+                            <table class="table">
+                                <tr>
+                                    <th>Benefit</th>
+                                    <th>Details</th>
+                                </tr>
+                                <tr>
+                                    <td>Salary Payment</td>
+                                    <td>7th of each month (or next working day)</td>
+                                </tr>
+                                <tr>
+                                    <td>Diwali Bonus</td>
+                                    <td>8.33% of basic salary (min ₹11,000, max ₹25,000)</td>
+                                </tr>
+                                <tr>
+                                    <td>Health Insurance</td>
+                                    <td>After 1 year service (₹5,000-₹8,000 based on age)</td>
+                                </tr>
+                                <tr>
+                                    <td>PA Insurance</td>
+                                    <td>₹5,00,000 coverage for all employees</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="policy-section">
+                        <h2 class="section-title">2. Reimbursements</h2>
+                        <div class="section-content">
+                            <p>For company-provided items upon resignation within 1 year:</p>
+                            <ul>
+                                <li>Uniform and Shoes: ₹2000</li>
+                                <li>T-Shirts: ₹500 × 3 = ₹1500</li>
+                                <li>Blazer: ₹2000</li>
+                                <li>Visiting Card: ₹1000</li>
+                            </ul>
+                            <p>All items must be returned during exit clearance or costs will be deducted from final settlement.</p>
+                        </div>
+                    </div>
+
+                    <div class="acceptance-box">
+                        <input type="checkbox" id="accept4" class="checkbox">
+                        <label for="accept4" class="acceptance-label">I acknowledge that I have read and understood the Compensation policies, and I agree to comply with these requirements.</label>
+                    </div>
+                </div>
+
+                <div class="page-actions">
+                    <button class="btn btn-default prev-btn">Previous</button>
+                    <button class="btn btn-primary next-btn">Next</button>
+                </div>
+            </div>
+
+            <!-- Page 5 - Final -->
+            <div class="policy-page" id="page5" style="display: none;">
+                <div class="page-header">
+                    <h1 class="page-title">Final Acknowledgments</h1>
+                    <p class="page-description">Review and submit all policy acknowledgments</p>
+                </div>
+                
+                <div class="policy-content">
+                    <div class="policy-section">
+                        <h2 class="section-title">1. Non-Compete Agreement</h2>
+                        <div class="section-content">
+                            <p>During employment and for 1 year after departure, employees may not:</p>
+                            <ul>
+                                <li>Engage in any business that competes with Aureole Pharma</li>
+                                <li>Solicit or recruit current employees for 24 months</li>
+                            </ul>
+                            <p>Violations may result in legal action.</p>
+                        </div>
+                    </div>
+
+                    <div class="policy-section">
+                        <h2 class="section-title">2. Final Confirmation</h2>
+                        <div class="section-content">
+                            <p>By submitting this form, you confirm that:</p>
+                            <ul>
+                                <li>You have read and understood all company policies</li>
+                                <li>You agree to comply with all requirements</li>
+                                <li>You understand the consequences of policy violations</li>
+                                <li>All information you've provided is accurate</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="acceptance-box">
+                        <input type="checkbox" id="accept5" class="checkbox">
+                        <label for="accept5" class="acceptance-label">I acknowledge that I have read and understood all company policies, and I agree to comply with these requirements.</label>
+                    </div>
+                </div>
+
+                <div class="page-actions">
+                    <button class="btn btn-default prev-btn">Previous</button>
+                    <button class="btn btn-primary" id="final-submit-btn">Submit All Acknowledgments</button>
+                </div>
+            </div>
+
+            <!-- Completion Page -->
+            <div class="policy-page completion-page" id="completion-page" style="display: none;">
+                <div class="success-icon">✓</div>
+                <h2 class="completion-title">Policy Acceptance Complete</h2>
+                <p class="completion-message">Thank you for reviewing and accepting all company policies. Your acknowledgments have been successfully submitted.</p>
+                <p class="completion-message">You may now close this window.</p>
+            </div>
+        </div>
+
+        <div class="pagination">
+            <button class="page-btn" data-page="1">1</button>
+            <button class="page-btn" data-page="2">2</button>
+            <button class="page-btn" data-page="3">3</button>
+            <button class="page-btn" data-page="4">4</button>
+            <button class="page-btn" data-page="5">5</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const pages = document.querySelectorAll('.policy-page');
+            const pageBtns = document.querySelectorAll('.page-btn');
+            const nextBtns = document.querySelectorAll('.next-btn');
+            const prevBtns = document.querySelectorAll('.prev-btn');
+            const acceptCheckboxes = document.querySelectorAll('.checkbox');
+            const finalSubmitBtn = document.getElementById('final-submit-btn');
+            
+            let currentPage = 1;
+
+            // Show first page initially
+            showPage(currentPage);
+
+            // Next button click handler
+            nextBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const currentCheckbox = document.getElementById(`accept${currentPage}`);
+                    if (currentCheckbox && !currentCheckbox.checked) {
+                        alert('Please acknowledge this policy before proceeding.');
+                        return;
+                    }
+                    
+                    if (currentPage < pages.length - 1) {
+                        currentPage++;
+                        showPage(currentPage);
+                    }
+                });
+            });
+
+            // Previous button click handler
+            prevBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    if (currentPage > 1) {
+                        currentPage--;
+                        showPage(currentPage);
+                    }
+                });
+            });
+
+            // Page button click handler
+            pageBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const pageNum = parseInt(this.getAttribute('data-page'));
+                    // Only allow navigation to pages that have been accepted or are the next in sequence
+                    let highestAcceptedPage = 0;
+                    acceptCheckboxes.forEach((cb, index) => {
+                        if (cb.checked) highestAcceptedPage = index + 1;
+                    });
+                    
+                    if (pageNum <= highestAcceptedPage + 1) {
+                        currentPage = pageNum;
+                        showPage(currentPage);
+                    } else {
+                        alert('Please complete the policies in order.');
+                    }
+                });
+            });
+
+            // Final submit button handler
+            finalSubmitBtn.addEventListener('click', function() {
+                const currentCheckbox = document.getElementById(`accept${currentPage}`);
+                if (currentCheckbox && !currentCheckbox.checked) {
+                    alert('Please acknowledge this policy before submitting.');
+                    return;
+                }
+                
+                // Check if all checkboxes are checked
+                let allAccepted = true;
+                acceptCheckboxes.forEach(cb => {
+                    if (!cb.checked) allAccepted = false;
+                });
+                
+                if (!allAccepted) {
+                    alert('Please acknowledge all policies before submitting.');
+                    return;
+                }
+                
+                // Show completion page
+                document.getElementById('completion-page').style.display = 'block';
+                document.querySelector('.page-container').querySelectorAll('.policy-page').forEach(page => {
+                    if (page.id !== 'completion-page') {
+                        page.style.display = 'none';
+                    }
+                });
+                
+                // Hide pagination
+                document.querySelector('.pagination').style.display = 'none';
+            });
+
+            // Show the specified page and hide others
+            function showPage(pageNum) {
+                pages.forEach((page, index) => {
+                    if (index + 1 === pageNum) {
+                        page.style.display = 'block';
+                    } else if (page.id !== 'completion-page') {
+                        page.style.display = 'none';
+                    }
+                });
+
+                // Update pagination buttons
+                pageBtns.forEach(btn => {
+                    const btnPage = parseInt(btn.getAttribute('data-page'));
+                    btn.classList.toggle('active', btnPage === pageNum);
+                });
+            }
+        });
+    </script>
+</body>
+</html>
